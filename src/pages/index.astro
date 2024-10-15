@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Logo from '../images/logo.png';
+import { Image } from 'astro:assets';
+---
+
+<Layout title="Bienvenido a GenteClic Peliculas">
+	<main>
+		<div class="container">
+			<div class="wrap">
+				<Image src={Logo} alt="logo" />
+
+				<div class="text-wrap">
+					<h1>Peliculas Clásicas Ilimitadas, Documentales & Más.</h1>
+					<h3>En cualquier dispositivo. COP 13,900. Cancela en cualquier momento.</h3>
+					
+					<a href="/home" class="btn">Inicia Ahora</a>
+				</div>
+			</div>
+		</div>
+	</main>
+</Layout>
+
+<style>
+.wrap {
+	height: 100vh;
+}
+
+.wrap, .text-wrap {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.text-wrap {
+	margin-top: 4rem;
+	row-gap: 1rem;
+}
+
+.text-wrap h1 {
+	max-width: 400px;
+}
+
+.text-wrap h1,
+.text-wrap h3 {
+	text-align: center;
+}
+
+.text-wrap a {
+	margin-top: 1rem;
+}
+</style>

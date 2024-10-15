@@ -1,0 +1,71 @@
+---
+import { Image } from "astro:assets";
+import Logo from "../images/logo.png";
+import Layout from '../layouts/Layout.astro';
+
+const { slug } = Astro.params;
+
+let res = await fetch(`https://www.genteclic.com/wp-json/wp/v2/posts?slug=${slug}&_embed`);
+let [post] = await res.json();
+
+// The getStaticPaths() is required for static Astro sites.
+// If using SSR, you will not need this function.
+
+export async function getStaticPaths() {
+  let data = await fetch("https://www.genteclic.com/wp-json/wp/v2/posts");
+  let posts = await data.json();
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post: post },
+  }));
+}
+
+// console.log(post.meta.jnews_single_post);
+---
+<Layout title={post.title.rendered}>
+    <main>
+        <div class="container">
+            <a href="/home">
+                <Image class="logo" src={Logo} alt="logo" />
+            </a>
+
+            <article class="movie-info">
+                <h1 set:html={post.title.rendered} />
+                <img class="poster" src={post._embedded['wp:featuredmedia']['0'].media_details.sizes.medium.source_url} />
+                <Fragment set:html={post.content.rendered} />
+
+                <div class="iframe-wrapper">
+                    <Fragment set:html={post.meta.jnews_single_post.video} />
+                </div>
+            </article>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    main {
+        padding-top: 3rem;
+    }
+
+    .logo {
+        margin: 0 auto;
+    }
+
+    .poster {
+        margin: 2rem 0;
+    }
+
+    .movie-info {
+        margin-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .iframe-wrapper {
+        margin-top: 5rem;
+        margin-bottom: 5rem;
+    }
+</style>

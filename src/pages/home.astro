@@ -1,0 +1,77 @@
+---
+import { Image } from "astro:assets";
+import Logo from "../images/logo.png";
+import Layout from "../layouts/Layout.astro";
+
+
+const res = await fetch("https://www.genteclic.com/wp-json/wp/v2/posts?_embed");
+const posts = await res.json();
+---
+
+<Layout title="Tus peliculas clasicas favoritas en GenteClic">
+    <main>
+        <div class="container">
+            <a href="/">
+                <Image src={Logo} alt="logo" />
+            </a>
+
+            <h1>Películas</h1>
+
+            <div class="movies-wrapper">
+                {
+                    posts.map(( post ) => (
+                       
+                            <div class="movie-wrapper">
+                                <a href={post.slug}>
+                                    <h2 set:html={post.title.rendered} />
+                                    <img src={post._embedded['wp:featuredmedia']['0'].media_details.sizes.medium.source_url} />
+                                    <Fragment set:html={post.excerpt.rendered} />
+                                </a>
+                                <a href={post.slug} class="btn">Ver más</a>
+                            </div>
+                        
+                    ))
+                }
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    main {
+        padding-top: 2rem;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    img {
+        margin: 0 auto;
+    }
+
+    .movies-wrapper {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, auto);
+        grid-row-gap: 3rem;
+        grid-column-gap: 2rem;
+        margin-top: 4rem;
+    }
+
+    @media (max-width: 520px) {
+        .movies-wrapper {
+            grid-template-columns: repeat(1, 1fr);
+            grid-template-rows: repeat(1, auto);
+        }
+    }
+
+    .btn {
+        margin-top: 2rem;
+    }
+</style>
+
+<script>
+    
+</script>
