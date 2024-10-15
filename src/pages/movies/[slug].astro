@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import Logo from "../images/logo.png";
-import Layout from '../layouts/Layout.astro';
+import Logo from "../../images/logo.png";
+import Layout from '../../layouts/Layout.astro';
 
 const { slug } = Astro.params;
 
@@ -26,7 +26,7 @@ export async function getStaticPaths() {
 <Layout title={post.title.rendered}>
     <main>
         <div class="container">
-            <a href="/home">
+            <a href="/movies">
                 <Image class="logo" src={Logo} alt="logo" />
             </a>
 
