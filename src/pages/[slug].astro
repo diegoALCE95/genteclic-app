@@ -21,7 +21,7 @@ export async function getStaticPaths() {
   }));
 }
 
-// console.log(post.meta.jnews_single_post);
+// console.log(post._embedded['wp:featuredmedia']['0'].media_details.sizes);
 ---
 <Layout title={post.title.rendered}>
     <main>
@@ -32,7 +32,7 @@ export async function getStaticPaths() {
 
             <article class="movie-info">
                 <h1 set:html={post.title.rendered} />
-                <img class="poster" src={post._embedded['wp:featuredmedia']['0'].media_details.sizes.medium.source_url} />
+                <img class="poster" src={post._embedded['wp:featuredmedia']['0'].media_details.sizes.full.source_url} / alt={post.title.rendered}>
                 <Fragment set:html={post.content.rendered} />
 
                 <div class="iframe-wrapper">
